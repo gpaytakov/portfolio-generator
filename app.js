@@ -1,32 +1,44 @@
-const profileDataArgs = process.argv.slice(2, process.argv.length);
-console.log(profileDataArgs);
+// importing fs=fileSystem module
+const fs = require('fs');
+const generatePage = require('./src/page-template.js');
 
-// Block 1
-// const printProfileData = (profileDataArr) => {
-//     console.log(profileDataArr);
-// };
+// const profileDataArgs = process.argv.slice(2, process.argv.lenght);
 
-// Block 2; Block 2 is same as Block 1 but loops through the array 
-// Notice the lack of parentheses around the `profileDataArr` parameter?
-// When only one parameter is provided, no need to use paranthesis in arrow function
 // const printProfileData = profileDataArr => {
-//     for (let i = 0; i < profileDataArr.length; i++) {
-//       console.log(profileDataArr[i]);
-//     }
+//   // This...
+//   for (let i = 0; i < profileDataArr.length; i += 1) {
+//     console.log(profileDataArr[i]);
+//   }
+
+//   console.log('================');
+
+//   // Is the same as this...
+//   profileDataArr.forEach(profileItem => console.log(profileItem));
 // };
 
-// Block 3; same as Block 2 but uses new .forEach() method
-// const printProfileData = profileDataArr => {
-//     profileDataArr.forEach((profileItem) => {
-//         console.log(profileItem)
-//     });
+// printProfileData(profileDataArgs);
+
+// // template literals
+// const generatePage = (userName, githubName) => `Name: ${userName}, Github: ${githubName}`;
+
+const profileDataArgs = process.argv.slice(2);
+// // long variable assignment method
+// const name = profileDataArgs[0];
+// const github = profileDataArgs[1];
+
+// short variable assignment method
+const [name1, github] = profileDataArgs;
+
+// // this is a test, if it is working 
+// const generatePage = (userName, githubName) => {
+//   return `
+//     Name: ${userName}
+//     GitHub: ${githubName}
+//   `;
 // };
 
-// Block 4; same as Block 3. .forEach() method is new (applies only array) and makes code cleaner
-// if the function doing one action, then it can be written in one line with arrow function 
-const printProfileData = profileDataArr => {
-    profileDataArr.forEach(profileItem => console.log(profileItem));
-};
+fs.writeFile('./index.html', generatePage(name1, github), err => {
+  if (err) throw err;
 
-
-printProfileData(profileDataArgs);
+  console.log('Portfolio complete! Check out index.html to see the output!');
+});
